@@ -159,11 +159,13 @@ run_analysis <- function (urlzipfile = "https://d396qusza40orc.cloudfront.net/ge
         ## Separate the column "variable"" in 2 columns
         ## creating another column named "calculate" that contain "Mean" or "Std"
         tidydata <- separate(tidydata, variable, c("variable","calculate"), sep="_")
-
+        tidydata$variable <- as.factor(tidydata$variable)
+        tidydata$calculate <- as.factor(tidydata$calculate)
+        
         ## create the directory to output file
         if(!file.exists(dirname(tidyfile))){dir.create(dirname(tidyfile),recursive = TRUE)}
         ## write a new file with tidydata
-        write.table(tidydata,tidyfile)
+        write.table(tidydata,tidyfile, row.name=FALSE)
         
         tidydata
         ## delete de train and test data files
